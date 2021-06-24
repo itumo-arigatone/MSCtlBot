@@ -9,6 +9,9 @@ token = "Input your discord token"
 # TODO endpoint and url is getting from enviroment
 stop_url = "https://xxxxxxxxxxxxxxxxx/xxxxxxxx"
 start_url = "https://xxxxxxxxxxxxxx/xxxxxxxx"
+ifconfig_url = "https://xxxxxxxxxxxxxx/xxxxx"
+
+method = "POST"
 
 @client.event
 async def on_ready():
@@ -24,8 +27,7 @@ async def on_message(message):
             result = server_stop(message)
             await message.channel.send(result)
         if message.content == "$ifconfig":
-            result = get_public_ip(message)
-            await message.channel.send(result)
+            get_public_ip()
 
 
 def server_start(message):
@@ -34,7 +36,7 @@ def server_start(message):
     headers = {
         "x-api-key": "xxxxxxxxxxxxxxxxxxxxxx"
     }
-    req = urllib.request.Request(start_url,headers=headers)
+    req = urllib.request.Request(start_url, method=method, headers=headers)
     # response check
     try:
         with urllib.request.urlopen(req) as res:
@@ -54,13 +56,18 @@ def server_stop(message):
         "x-api-key": "xsxxxxxxxxxxxxxxxxxxxxxxxxxx"
     }
     # response check
-    req = urllib.request.Request(stop_url,headers=headers)
+    req = urllib.request.Request(stop_url, method=method, headers=headers)
     with urllib.request.urlopen(req) as res:
         body = res.read()
     desciption = message.author.name + "さんがサーバーを停止しました。"
     return desciption
 
-def get_public_ip(message):
-    return "develop"
+def get_public_ip():
+    headers = {
+        "x-api-key": "xsxxxxxxxxxxxxxxxxxxxxxxxxx"
+    }
+    req = urllib.request.Request(ifconfig_url, method=method, headers=headers)
+    with urllib.request.urlopen(req) as res:
+        body = res.read()
 
 client.run(token)
