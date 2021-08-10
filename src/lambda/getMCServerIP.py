@@ -2,8 +2,8 @@ import boto3
 import urllib.request
 import json
 
-region = 'ap-northeast-1'
-instances = ['i-010926c6376db3e72']
+region = 'xxxxxxxxxxxx'
+instances = ['xxxxxxxxxxx']
 ec2 = boto3.client('ec2', region_name=region)
 
 def lambda_handler(event, context):
@@ -13,7 +13,8 @@ def lambda_handler(event, context):
     else:
         comment = {"content": "パブリックIPアドレスが取得できませんでした。"}
     headers = {'content-type': 'application/json'}
-    url = 'https://discord.com/api/webhooks/851792674087632896/MzgoaoruKcB66_0iOYcqPcPtD4b2yVpjt5K7wBTE1KyaKV5kK2TagPc6enG0hQ0NQv2g'
+    // webhook url
+    url = 'xxxxxxxx'
     req = urllib.request.Request(
         url,
         json.dumps(comment).encode(),
